@@ -34,5 +34,9 @@ typedef struct Graph{
 Graph* GraphInit(int n);
 //释放邻接链表表示的图的存储空间
 void GraphDestroy(Graph *graph);
+//判断一条边是否在图中，邻接链表表示的图
+bool GraphHasEdge(Graph *graph,int s,int d);
+//在图中添加一条边，邻接链表表示的图
+bool GraphAddEdge(Graph *graph,int s,int d);
 
 #endif

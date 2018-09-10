@@ -11,6 +11,9 @@ int main()
     
 
     Graph *graph = GraphInit(NODE_NUM);
+
+    GraphAddEdge(graph,0,1);
+
     GraphDestroy(graph);
 
 
@@ -26,11 +29,11 @@ Graph* GraphInit(int n)
     int i;
     for(i=0;i<n;++i)
     {
-        G->n = i;
-        G->color = WHITE;
-        G->d = INFINITE;
-        G->pi = NIL;
-        G->next = NULL;
+        G[i].n = i;
+        G[i].color = WHITE;
+        G[i].d = INFINITE;
+        G[i].pi = NIL;
+        G[i].next = NULL;
     }
     Graph * graph = (Graph *)malloc(sizeof(Graph));
     graph->G = G;
@@ -45,7 +48,7 @@ void GraphDestroy(Graph *graph)
     LNode *lnptr1,*lnptr2;
     for(i=0;i<n;++i)
     {
-        lnptr1 = graph->G->next;
+        lnptr1 = graph->G[i].next;
         while(lnptr1)
         {
             lnptr2 = lnptr1->next;
@@ -57,4 +60,32 @@ void GraphDestroy(Graph *graph)
     free(graph->G);
     //释放Graph结构体空间
     free(graph);
+}
+
+//判断一条边是否在图中，邻接链表表示的图
+bool GraphHasEdge(Graph *graph,int s,int d)
+{
+    if(s<0 || d<0 || s > graph->nodeNum - 1 || d > graph->nodeNum - 1)
+        return false;
+    LNode *lnptr=graph->G[s].next;
+    while(lnptr)
+    {
+        if(lnptr->n == d)return true;
+        lnptr = lnptr->next;
+    }
+    return false;
+}
+
+//在图中添加一条边，邻接链表表示的图
+bool GraphAddEdge(Graph *graph,int s,int d)
+{
+    if(s<0 || d<0 || s > graph->nodeNum - 1 || d > graph->nodeNum - 1)
+        return false;
+    if(GraphHasEdge(graph,s,d))
+        return false;
+    LNode *lnptr=(LNode *)malloc(sizeof(LNode));
+    lnptr->n = d;
+    lnptr->next = graph->G[s].next;
+    graph->G[s].next = lnptr;
+    return true;
 }
