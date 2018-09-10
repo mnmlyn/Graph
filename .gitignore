@@ -32,3 +32,4 @@
 *.app
 
 *.code-workspace
+.vscode
