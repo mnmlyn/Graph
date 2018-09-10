@@ -38,5 +38,15 @@ void GraphDestroy(Graph *graph);
 bool GraphHasEdge(Graph *graph,int s,int d);
 //在图中添加一条边，邻接链表表示的图
 bool GraphAddEdge(Graph *graph,int s,int d);
+//打印图，邻接链表表示的图
+void GraphPrint(Graph *graph,int flags);
+#define GP_COLOR 1
+#define GP_D 1<<1
+#define GP_PI 1<<2
+#define GP_NEXT 1<<3
+/*
+1(White,d=1,pi=2)
+ -> 3 4 5 6
+*/
 
 #endif
