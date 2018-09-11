@@ -48,5 +48,7 @@ void GraphPrint(Graph *graph,int flags);
 1(White,d=1,pi=2)
  -> 3 4 5 6
 */
+//广度优先搜索
+void GraphBFS(Graph *graph,int s);
 
 #endif
