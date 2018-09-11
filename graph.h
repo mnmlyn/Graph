@@ -50,5 +50,7 @@ void GraphPrint(Graph *graph,int flags);
 */
 //广度优先搜索
 void GraphBFS(Graph *graph,int s);
+//打印出s到v的最短路径上的节点，应在BFS之后执行
+void GraphPathPrint(Graph *graph,int s,int v);
 
 #endif
