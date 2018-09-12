@@ -18,6 +18,7 @@ typedef struct VNode{
     #define BLACK 2
     int d;
     #define INFINITE INT_MAX
+    int f;
     int pi;
     #define NIL -1
     LNode *next;
@@ -42,15 +43,18 @@ bool GraphAddEdge(Graph *graph,int s,int d);
 void GraphPrint(Graph *graph,int flags);
 #define GP_COLOR 1
 #define GP_D 1<<1
-#define GP_PI 1<<2
-#define GP_NEXT 1<<3
+#define GP_F 1<<2
+#define GP_PI 1<<3
+#define GP_NEXT 1<<4
 /*
-1(White,d=1,pi=2)
+1(White,d=1,f=2,pi=2)
  -> 3 4 5 6
 */
 //广度优先搜索
 void GraphBFS(Graph *graph,int s);
 //打印出s到v的最短路径上的节点，应在BFS之后执行
 void GraphPathPrint(Graph *graph,int s,int v);
+//深度优先搜索
+void GraphDFS(Graph *graph);
 
 #endif

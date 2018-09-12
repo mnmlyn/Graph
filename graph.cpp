@@ -8,9 +8,6 @@
 int main()
 {
     using namespace std;
-
-    
-
     Graph *graph = GraphInit(NODE_NUM);
 
     GraphAddEdge(graph,0,1);
@@ -26,6 +23,10 @@ int main()
     GraphPrint(graph,GP_NEXT | GP_COLOR | GP_D |GP_PI);
 
     GraphPathPrint(graph,1,3);
+
+    GraphDFS(graph);
+
+    GraphPrint(graph,GP_NEXT | GP_COLOR | GP_D | GP_F | GP_PI);
 
     GraphDestroy(graph);
 
@@ -152,6 +153,19 @@ void GraphPrint(Graph *graph,int flags)
             if(G[i].d == INFINITE)cout << "INFINITE";
             else cout << G[i].d;
         }
+        //f
+        if(flags & GP_F)
+        {
+            if(preArg)cout << ",";
+            else
+            {
+                cout << "(";
+                preArg = true;
+            }
+            cout << "f=";
+            if(G[i].f == INFINITE)cout << "INFINITE";
+            else cout << G[i].f;
+        }
         //pi
         if(flags & GP_PI)
         {
@@ -249,4 +263,42 @@ void GraphPathPrint(Graph *graph,int s,int v)
         std::cout << "s or d not in right range\n";
     GraphPathPrint_helper(graph,s,v);
     std::cout << "\n";
+}
+
+//深度优先搜索，辅助递归函数
+void GraphDFS_helper(Graph *graph,int u,int &time)
+{
+    graph->G[u].d = ++time;
+    graph->G[u].color = GRAY;
+    LNode *lnptr = graph->G[u].next;
+    while(lnptr)
+    {
+        int v = lnptr->n;
+        if(graph->G[v].color == WHITE)
+        {
+            graph->G[v].pi = u;
+            GraphDFS_helper(graph,v,time);
+        }
+        lnptr = lnptr->next;
+    }
+    graph->G[u].color = BLACK;
+    graph->G[u].f = ++time;
+}
+
+//深度优先搜索
+void GraphDFS(Graph *graph)
+{
+    int i,n=graph->nodeNum,time=0;
+    //init args
+    for(i=0;i<n;++i)
+    {
+        graph->G[i].color = WHITE;
+        graph->G[i].pi = NIL;
+    }
+    //DFS
+    for(i=0;i<n;++i)
+    {
+        if(graph->G[i].color == WHITE)
+            GraphDFS_helper(graph,i,time);
+    }
 }
